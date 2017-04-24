@@ -30,11 +30,11 @@ public class TerrainController {
 				float _seedX = Random.value * 100f;
 				float _seedZ = Random.value * 100f;
 
-				float xSample = (_seedX) / _relief;
-				float zSample = (_seedZ) / _relief;
+				float xHeight = (_seedX) / _relief;
+				float yHeight = (_seedZ) / _relief;
 
-				heights[x, y] =  Mathf.PerlinNoise(xSample, zSample);
-				map [x, y, getColor(heights [x, y])] = 1f;
+				heights[x, y] =  Mathf.PerlinNoise(xHeight, yHeight);
+				map [x, y, getTextureIndex(heights [x, y])] = 1f;
 				yield return new WaitForSeconds (0.001f);
 				terrainData.SetHeights (0, 0, heights);
 				terrainData.SetAlphamaps (0, 0, map);
@@ -59,7 +59,7 @@ public class TerrainController {
 		return splayPrototypes;
 	}
 
-	private int getColor (float height) {
+	private int getTextureIndex (float height) {
 		if (height < 0.3f)
 			return 0;
 		if (height >= 0.3f && height < 0.6f)
